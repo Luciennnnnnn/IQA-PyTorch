@@ -112,10 +112,11 @@ class CLIPIQA(nn.Module):
                  backbone='RN50',
                  pretrained=True,
                  pos_embedding=False,
+                 download_root: str = None
                  ) -> None:
         super().__init__()
 
-        self.clip_model = [load(backbone, 'cpu')]  # avoid saving clip weights
+        self.clip_model = [load(backbone, 'cpu', download_root=download_root)]  # avoid saving clip weights
         # Different from original paper, we assemble multiple prompts to improve performance
         self.prompt_pairs = clip.tokenize([
             'Good image', 'bad image',
